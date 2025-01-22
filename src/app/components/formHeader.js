@@ -13,7 +13,6 @@ export const FormHeader = () => {
           Please provide all current information accurately.
         </p>
       </div>
-      <div className="FormHeader  w-[416px] h-[228px]"></div>
     </>
   );
 };

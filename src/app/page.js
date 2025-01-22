@@ -12,7 +12,3 @@ export default function Home() {
     </div>
   );
 }
-
-
-const handleNextPage = () => {};
-const handleBackPage = () => {};

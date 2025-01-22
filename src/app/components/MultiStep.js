@@ -5,6 +5,7 @@ import { StepOne } from "./StepOne";
 import { StepTwo } from "./StepTwo";
 import { StepThree } from "./StepThree";
 import { LastPage } from "./LastPage";
+import { motion, AnimatePresence } from "framer-motion";
 
 export const MultiStep = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -12,8 +13,27 @@ export const MultiStep = () => {
     firstName: "",
     lastName: "",
     userName: "",
-    phoneName: "",
+    phoneNumber: "",
+    password: "",
+    confirmPassword: "",
+    dateBirth: "",
+    profileImg: "",
   });
+
+  const [formError, setFormError] = useState({
+    firstName: "",
+    lastName: "",
+    userName: "",
+    phoneNumber: "",
+    password: "",
+    confirmPassword: "",
+    dateBirth: "",
+    profileImg: "",
+  });
+
+  const handleError = (errors) => {
+    setFormError((prev) => ({ ...prev, ...errors }));
+  };
 
   const Step = [StepOne, StepTwo, StepThree, LastPage][currentStep];
 
@@ -29,12 +49,25 @@ export const MultiStep = () => {
   };
   return (
     <div className="flex items-center justify-center bg-[#F4F4F4] w-screen h-screen">
-      <div className="w-[480px] h-[655px] bg-[#FFF] rounded-lg flex-col ">
-        <Step
-        handleNextPage = {handleNextPage}
-        handleBackPage = {handleBackPage}
-        />
-      </div>{" "}
+      <AnimatePresence exitBeforeEnter>
+        <motion.div
+          key={currentStep}
+          initial={{ opacity: 0, x: 100 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -100 }}
+          transition={{ duration: 0.5 }}
+          className="w-[480px] h-[655px] bg-[#FFF] rounded-lg flex flex-col items-center justify-center"
+        >
+          <Step
+            handleNextPage={handleNextPage}
+            handleBackPage={handleBackPage}
+            setFormValue={setFormValue}
+            handleError={handleError}
+            formValue={formValue}
+            errors={formError}
+          />
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 };
