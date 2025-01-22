@@ -1,39 +1,49 @@
 import React from "react";
 import { FormHeader } from "./formHeader";
 import { Button } from "./Button";
-import handleNextPage from "@/app/components/MultiStep";
 import { Input } from "./Input";
 import { motion } from "framer-motion";
+import { isStepOneValid } from "../utils/isStepOneValid ";
 
 export const StepOne = (props) => {
   const {
-    text,
     handleNextPage,
     className,
     errors,
     formValue,
     handleError,
     setFormValue,
+    clearError,
   } = props;
-  const error = false;
+
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setFormValue((prev) => ({...prev, [name]: value}));
+    setFormValue((prev) => ({ ...prev, [name]: value }));
+    clearError(name);
   };
 
   const handleFormNextStep = () => {
-const {isValid, errors} = isStepOneValid(formValue);
-if (isValid){
-  handleNextPage();
-}
-handleError(errors);
-
-    // error
-  
+    const { isValid, errors } = isStepOneValid(formValue);
+    if (isValid) {
+      const localData = {
+        ...formValue,
+        currentStep: 1,
+      };
+      localStorage.setItem("FormData", JSON.stringify(localData));
+      handleNextPage();
+    }
+    handleError(errors);
   };
+
   return (
-    <div className="w-[480px] h-[655px] bg-[#FFF] rounded-lg flex-col justify-center ">
-      <div className="Container  w-[416px] h-[385px] flex-col justify-center">
+    <motion.div
+      initial={{ opacity: 0, x: 100 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: -100 }}
+      transition={{ duration: 0.5 }}
+      className="w-[480px] h-[655px] bg-[#FFF] rounded-lg flex-col justify-center relative"
+    >
+      <div className="Container w-[416px] h-[385px] flex-col justify-center absolute top-[10px] left-[32px]">
         <FormHeader />
         <div className="flex flex-col gap-[8px] mt-[12px]">
           <label className="text-[#334155] text-sm font-semibold">
@@ -43,11 +53,12 @@ handleError(errors);
             <Input
               className="w-full h-full bg-transparent outline-none text-black placeholder-gray-500"
               placeholder="Placeholder"
-              onchange={handleChange}
+              onChange={handleChange}
               name={"firstName"}
+              value={formValue.firstName}
             />
-            {errors.firstName.length > 0 && <p className="text-red-500">{errors.firstName}</p>}
           </div>
+          {errors.firstName && <p className="text-red-500">{errors.firstName}</p>}
         </div>
 
         <div className="flex flex-col gap-[8px] mt-[12px]">
@@ -58,8 +69,12 @@ handleError(errors);
             <Input
               className="w-full h-full bg-transparent outline-none text-black placeholder-gray-500"
               placeholder="Placeholder"
+              onChange={handleChange}
+              name={"lastName"}
+              value={formValue.lastName}
             />
           </div>
+          {errors.lastName && <p className="text-red-500">{errors.lastName}</p>}
         </div>
 
         <div className="flex flex-col gap-[8px] mt-[12px]">
@@ -70,27 +85,20 @@ handleError(errors);
             <Input
               className="w-full h-full bg-transparent outline-none text-black placeholder-gray-500"
               placeholder="Placeholder"
+              onChange={handleChange}
+              name={"userName"}
+              value={formValue.userName}
             />
           </div>
+          {errors.userName && <p className="text-red-500">{errors.userName}</p>}
         </div>
 
         <Button
           text={"Next"}
-          className="w-[416px] h-[44px] bg-[#121316] rounded-[6px] "
-          handleNextPage={handleNextPage}
+          className="w-[416px] h-[44px] bg-[#121316] rounded-[6px]"
+          handleNextPage={handleFormNextStep}
         />
       </div>
-    </div>
+    </motion.div>
   );
-};
-
-const isStepOneValid = (data) => {
-  const {firstName} = data;
-  const errors = {};
-  const isValid = true;
-  if (firstName.length <= 1) {
-    errors.firstName = "First name should include at least 2 characters";
-    isValid = false;
-  }
-  return {isValid, errors}
 };

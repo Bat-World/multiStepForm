@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { StepOne } from "./StepOne";
 import { StepTwo } from "./StepTwo";
@@ -35,10 +35,15 @@ export const MultiStep = () => {
     setFormError((prev) => ({ ...prev, ...errors }));
   };
 
-  const Step = [StepOne, StepTwo, StepThree, LastPage][currentStep];
+  const clearError = (name) => {
+    setFormError((prev) => ({ ...prev, [name]: "" }));
+  };
+
+  const steps = [StepOne, StepTwo, StepThree, LastPage];
+  const Step = steps[currentStep];
 
   const handleNextPage = () => {
-    if (currentStep !== 3) {
+    if (currentStep !== steps.length - 1) {
       setCurrentStep((prevStep) => prevStep + 1);
     }
   };
@@ -47,6 +52,16 @@ export const MultiStep = () => {
       setCurrentStep((prevStep) => prevStep - 1);
     }
   };
+
+  useEffect(() => {
+    const data = localStorage.getItem("FormData");
+    if (data) {
+      const parsedData = JSON.parse(data);
+      setFormValue(parsedData);
+      setCurrentStep(parsedData.currentStep || 0);
+    }
+  }, []);
+
   return (
     <div className="flex items-center justify-center bg-[#F4F4F4] w-screen h-screen">
       <AnimatePresence exitBeforeEnter>
@@ -63,6 +78,7 @@ export const MultiStep = () => {
             handleBackPage={handleBackPage}
             setFormValue={setFormValue}
             handleError={handleError}
+            clearError={clearError}
             formValue={formValue}
             errors={formError}
           />
