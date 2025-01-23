@@ -54,14 +54,14 @@ export const MultiStep = () => {
     }
   };
 
-  useEffect(() => {
-    const data = localStorage.getItem("FormData");
-    if (data) {
-      const parsedData = JSON.parse(data);
-      setFormValue(parsedData);
-      setCurrentStep(parsedData.currentStep || 0);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const data = localStorage.getItem("FormData");
+  //   if (data) {
+  //     const parsedData = JSON.parse(data);
+  //     setFormValue(parsedData);
+  //     setCurrentStep(parsedData.currentStep || 0);
+  //   }
+  // }, []);
 
   return (
     <div className="flex items-center justify-center bg-[#F4F4F4] w-screen h-screen">
@@ -71,7 +71,7 @@ export const MultiStep = () => {
           initial={{ opacity: 0, x: 100 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -100 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.3 }}
           className="w-[480px] h-[655px] bg-[#FFF] rounded-lg flex flex-col items-center justify-center"
         >
           <Step

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Input } from "./Input";
 import { Button } from "./Button";
 import { FormHeader } from "./formHeader";
@@ -15,10 +15,18 @@ export const StepThree = (props) => {
     errors,
   } = props;
 
+  const [preview, setPreview] = useState(null);
+
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setFormValue((prev) => ({ ...prev, profileImg: file }));
     clearError("profileImg");
+
+    if (file) {
+      setPreview(URL.createObjectURL(file));
+    } else {
+      setPreview(null);
+    }
   };
 
   const handleDateChange = (event) => {
@@ -32,14 +40,7 @@ export const StepThree = (props) => {
     const today = new Date();
     const birthDate = new Date(formValue.dateBirth);
     const age = today.getFullYear() - birthDate.getFullYear();
-    const monthDifference = today.getMonth() - birthDate.getMonth();
 
-    if (
-      monthDifference < 0 ||
-      (monthDifference === 0 && today.getDate() < birthDate.getDate())
-    ) {
-      age--;
-    }
 
     if (age < 18) {
       errors.dateBirth = "You must be at least 18 years old";
@@ -76,15 +77,12 @@ export const StepThree = (props) => {
             <p className="text-red-500">{errors.dateBirth}</p>
           )}
         </div>
-        <div className="flex flex-col gap-[8px] mt-[12px] ">
-          <div className="w-[180px] h-auto flex justify-start">
-            {" "}
-            <label className="text-[#334155] text-sm font-semibold text-left">
-              Profile Image <span className="text-red-500">*</span>
-            </label>
-          </div>
+        <div className="flex flex-col gap-[8px] mt-[12px] items-center">
+          <label className="text-[#334155] text-sm font-semibold">
+            Profile Image <span className="text-red-500">*</span>
+          </label>
           <div className="w-[416px] h-[180px] rounded-lg border border-[#8B8E95] focus-within:border-[#0CA5E9] focus-within:outline-none flex flex-col items-center justify-center px-3">
-            <inputs
+            <input
               type="file"
               className="hidden"
               id="profileImg"
@@ -94,7 +92,11 @@ export const StepThree = (props) => {
             <label htmlFor="profileImg" className="cursor-pointer">
               <DropImgIcon />
             </label>
-            <p className="text-gray-500 mt-2">Click to upload</p>
+            {preview ? (
+              <img src={preview} alt="Profile Preview" className="mt-2 w-full h-full object-cover rounded-lg" />
+            ) : (
+              <p className="text-gray-500 mt-2">Click to upload</p>
+            )}
           </div>
           {errors.profileImg && (
             <p className="text-red-500">{errors.profileImg}</p>
