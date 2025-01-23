@@ -1,19 +1,18 @@
 import React from "react";
-import { FormHeader } from "./formHeader";
 import { Input } from "./Input";
 import { Button } from "./Button";
-import { motion } from "framer-motion";
+import { FormHeader } from "./formHeader";
 import { isStepTwoValid } from "../utils/isStepTwoValid";
 
 export const StepTwo = (props) => {
   const {
     handleNextPage,
     handleBackPage,
-    errors,
-    formValue,
-    handleError,
     setFormValue,
+    handleError,
     clearError,
+    formValue,
+    errors,
   } = props;
 
   const handleChange = (event) => {
@@ -31,13 +30,7 @@ export const StepTwo = (props) => {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, x: 100 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -100 }}
-      transition={{ duration: 0.5 }}
-      className="w-[480px] h-[655px] bg-[#FFF] rounded-lg flex-col justify-center relative"
-    >
+    <div className="w-[480px] h-[655px] bg-[#FFF] rounded-lg flex-col justify-center relative">
       <div className="Container w-[416px] h-[385px] flex-col justify-center absolute top-[10px] left-[32px]">
         <FormHeader />
         <div className="flex flex-col gap-[8px] mt-[12px]">
@@ -69,7 +62,9 @@ export const StepTwo = (props) => {
               value={formValue.phoneNumber}
             />
           </div>
-          {errors.phoneNumber && <p className="text-red-500">{errors.phoneNumber}</p>}
+          {errors.phoneNumber && (
+            <p className="text-red-500">{errors.phoneNumber}</p>
+          )}
         </div>
 
         <div className="flex flex-col gap-[8px] mt-[12px]">
@@ -103,21 +98,23 @@ export const StepTwo = (props) => {
               type="password"
             />
           </div>
-          {errors.confirmPassword && <p className="text-red-500">{errors.confirmPassword}</p>}
+          {errors.confirmPassword && (
+            <p className="text-red-500">{errors.confirmPassword}</p>
+          )}
         </div>
       </div>
       <div className="absolute bottom-[32px] left-[32px] gap-[8px] flex direction-row">
         <Button
           text={"Back"}
-          className="w-[128px] h-[44px] bg-[#FFF] rounded-[6px] border-[1px] border-solid border-[#CBD5E1] text-black"
+          className="w-[128px] h-[44px] bg-[#FFF] rounded-[6px] border-[1px] border-solid border-[#CBD5E1] text-black text-lg font-medium"
           handleNextPage={handleBackPage}
         />
         <Button
-          text={"Next"}
-          className="w-[280px] h-[44px] bg-[#121316] rounded-[6px]"
+          text={"Continue 2/3 >"}
+          className="w-[280px] h-[44px] bg-[#121316] rounded-[6px] text-lg font-medium text-[#FFF]"
           handleNextPage={handleFormNextStep}
         />
       </div>
-    </motion.div>
+    </div>
   );
 };

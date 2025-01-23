@@ -1,19 +1,19 @@
 import React from "react";
-import { FormHeader } from "./formHeader";
-import { Button } from "./Button";
 import { Input } from "./Input";
+import { Button } from "./Button";
 import { motion } from "framer-motion";
+import { FormHeader } from "./formHeader";
 import { isStepOneValid } from "../utils/isStepOneValid ";
 
 export const StepOne = (props) => {
   const {
     handleNextPage,
-    className,
-    errors,
-    formValue,
-    handleError,
     setFormValue,
+    handleError,
     clearError,
+    className,
+    formValue,
+    errors,
   } = props;
 
   const handleChange = (event) => {
@@ -58,7 +58,9 @@ export const StepOne = (props) => {
               value={formValue.firstName}
             />
           </div>
-          {errors.firstName && <p className="text-red-500">{errors.firstName}</p>}
+          {errors.firstName && (
+            <p className="text-red-500">{errors.firstName}</p>
+          )}
         </div>
 
         <div className="flex flex-col gap-[8px] mt-[12px]">
@@ -92,13 +94,14 @@ export const StepOne = (props) => {
           </div>
           {errors.userName && <p className="text-red-500">{errors.userName}</p>}
         </div>
-
-        <Button
-          text={"Next"}
-          className="w-[416px] h-[44px] bg-[#121316] rounded-[6px]"
-          handleNextPage={handleFormNextStep}
-        />
       </div>
+      <div className="absolute bottom-[32px] left-[32px]">
+          <Button
+            text={"Continue 1/3 >"}
+            className="w-[416px] h-[44px] bg-[#121316] rounded-[6px] text-lg font-medium text-[#FFF]"
+            handleNextPage={handleFormNextStep}
+          />
+        </div>
     </motion.div>
   );
 };

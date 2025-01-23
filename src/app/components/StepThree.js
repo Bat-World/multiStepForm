@@ -1,18 +1,18 @@
 import React from "react";
-import { FormHeader } from "./formHeader";
-import { Button } from "./Button";
 import { Input } from "./Input";
-import { motion } from "framer-motion";
+import { Button } from "./Button";
+import { FormHeader } from "./formHeader";
 import DropImgIcon from "../Icons/dropImgIcon";
 
 export const StepThree = (props) => {
   const {
     handleBackPage,
     handleNextPage,
-    formValue,
     setFormValue,
     clearError,
+    formValue,
     errors,
+    text
   } = props;
 
   const handleFileChange = (event) => {
@@ -22,13 +22,7 @@ export const StepThree = (props) => {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, x: 100 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -100 }}
-      transition={{ duration: 0.5 }}
-      className="w-[480px] h-[655px] bg-[#FFF] rounded-lg flex-col justify-center relative"
-    >
+    <div className="w-[480px] h-[655px] bg-[#FFF] rounded-lg flex-col justify-center relative">
       <div className="Container w-[416px] h-[385px] flex-col justify-center absolute top-[10px] left-[32px]">
         <FormHeader />
         <div className="flex flex-col gap-[8px] mt-[12px]">
@@ -42,23 +36,25 @@ export const StepThree = (props) => {
               onChange={handleFileChange}
               name="profileImg"
             />
-            <DropImgIcon/>
+            <DropImgIcon />
           </div>
-          {errors.profileImg && <p className="text-red-500">{errors.profileImg}</p>}
+          {errors.profileImg && (
+            <p className="text-red-500">{errors.profileImg}</p>
+          )}
         </div>
       </div>
       <div className="absolute bottom-[32px] left-[32px] gap-[8px] flex direction-row">
         <Button
           text={"Back"}
-          className="w-[128px] h-[44px] bg-[#FFF] rounded-[6px] border-[1px] border-solid border-[#CBD5E1] text-black"
+          className="w-[128px] h-[44px] bg-[#FFF] rounded-[6px] border-[1px] border-solid border-[#CBD5E1] text-black text-lg font-medium"
           handleNextPage={handleBackPage}
         />
         <Button
-          text={"Next"}
-          className="w-[280px] h-[44px] bg-[#121316] rounded-[6px]"
+          text={"Continue 3/3 >"}
+          className="w-[280px] h-[44px] bg-[#121316] rounded-[6px] text-lg font-medium text-[#FFF]"
           handleNextPage={handleNextPage}
         />
       </div>
-    </motion.div>
+    </div>
   );
 };
