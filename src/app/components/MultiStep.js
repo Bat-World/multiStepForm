@@ -1,13 +1,12 @@
 "use client";
 
-import { useState } from "react";
+
 import { StepOne } from "./StepOne";
 import { StepTwo } from "./StepTwo";
 import { LastPage } from "./LastPage";
 import { StepThree } from "./StepThree";
-import React, { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-
 
 export const MultiStep = () => {
   const [currentStep, setCurrentStep] = useState(0);

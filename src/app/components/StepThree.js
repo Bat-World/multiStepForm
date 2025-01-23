@@ -10,9 +10,9 @@ export const StepThree = (props) => {
     handleNextPage,
     setFormValue,
     clearError,
+    handleError,
     formValue,
     errors,
-    text
   } = props;
 
   const handleFileChange = (event) => {
@@ -21,22 +21,80 @@ export const StepThree = (props) => {
     clearError("profileImg");
   };
 
+  const handleDateChange = (event) => {
+    const { name, value } = event.target;
+    setFormValue((prev) => ({ ...prev, [name]: value }));
+    clearError(name);
+  };
+
+  const handleFormNextStep = () => {
+    const errors = {};
+    const today = new Date();
+    const birthDate = new Date(formValue.dateBirth);
+    const age = today.getFullYear() - birthDate.getFullYear();
+    const monthDifference = today.getMonth() - birthDate.getMonth();
+
+    if (
+      monthDifference < 0 ||
+      (monthDifference === 0 && today.getDate() < birthDate.getDate())
+    ) {
+      age--;
+    }
+
+    if (age < 18) {
+      errors.dateBirth = "You must be at least 18 years old";
+      handleError(errors);
+      return;
+    }
+
+    const localData = {
+      ...formValue,
+      currentStep: 3,
+    };
+    localStorage.setItem("FormData", JSON.stringify(localData));
+    handleNextPage();
+  };
+
   return (
     <div className="w-[480px] h-[655px] bg-[#FFF] rounded-lg flex-col justify-center relative">
       <div className="Container w-[416px] h-[385px] flex-col justify-center absolute top-[10px] left-[32px]">
         <FormHeader />
         <div className="flex flex-col gap-[8px] mt-[12px]">
           <label className="text-[#334155] text-sm font-semibold">
-            Profile Image <span className="text-red-500">*</span>
+            Date of birth <span className="text-red-500">*</span>
           </label>
-          <div className="w-[416px] h-[180px] rounded-lg border border-[#8B8E95] focus-within:border-[#0CA5E9] focus-within:outline-none flex items-center px-3">
+          <div className="w-[416px] h-[44px] rounded-lg border border-[#8B8E95] focus-within:border-[#0CA5E9] focus-within:outline-none flex items-center px-3">
             <input
-              type="file"
+              type="date"
               className="w-full h-full bg-transparent outline-none text-black placeholder-gray-500"
+              onChange={handleDateChange}
+              name="dateBirth"
+              value={formValue.dateBirth}
+            />
+          </div>
+          {errors.dateBirth && (
+            <p className="text-red-500">{errors.dateBirth}</p>
+          )}
+        </div>
+        <div className="flex flex-col gap-[8px] mt-[12px] ">
+          <div className="w-[180px] h-auto flex justify-start">
+            {" "}
+            <label className="text-[#334155] text-sm font-semibold text-left">
+              Profile Image <span className="text-red-500">*</span>
+            </label>
+          </div>
+          <div className="w-[416px] h-[180px] rounded-lg border border-[#8B8E95] focus-within:border-[#0CA5E9] focus-within:outline-none flex flex-col items-center justify-center px-3">
+            <inputs
+              type="file"
+              className="hidden"
+              id="profileImg"
               onChange={handleFileChange}
               name="profileImg"
             />
-            <DropImgIcon />
+            <label htmlFor="profileImg" className="cursor-pointer">
+              <DropImgIcon />
+            </label>
+            <p className="text-gray-500 mt-2">Click to upload</p>
           </div>
           {errors.profileImg && (
             <p className="text-red-500">{errors.profileImg}</p>
@@ -46,13 +104,13 @@ export const StepThree = (props) => {
       <div className="absolute bottom-[32px] left-[32px] gap-[8px] flex direction-row">
         <Button
           text={"Back"}
-          className="w-[128px] h-[44px] bg-[#FFF] rounded-[6px] border-[1px] border-solid border-[#CBD5E1] text-black text-lg font-medium"
+          className="w-[128px] h-[44px] bg-[#FFF] rounded-[6px] border-[1px] border-solid border-[#CBD5E1] text-black"
           handleNextPage={handleBackPage}
         />
         <Button
           text={"Continue 3/3 >"}
           className="w-[280px] h-[44px] bg-[#121316] rounded-[6px] text-lg font-medium text-[#FFF]"
-          handleNextPage={handleNextPage}
+          handleNextPage={handleFormNextStep}
         />
       </div>
     </div>

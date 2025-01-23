@@ -3,8 +3,8 @@ import PineconeIcon from "../Icons/PineconeIcon";
 
 export const LastPage = () => {
   return (
-    <div className="w-[480px] h-[193px] bg-[#FFF] rounded-lg flex-col justify-center ">
-      <div className="Container  w-[416px] h-[129px] flex-col justify-center">
+    <div className="w-[480px] h-[655px] bg-[#F4F4F4] rounded-lg  flex items-center ">
+      <div className="Container  w-[448px] h-[239px] flex-col justify-center bg-[#FFF] rounded-lg p-[32px]">
         <div className="FormHeader  w-[416px] h-[129px] flex-col">
           <PineconeIcon />
           <div className="flex direction-row ">

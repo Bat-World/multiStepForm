@@ -31,7 +31,7 @@ export const StepTwo = (props) => {
 
   return (
     <div className="w-[480px] h-[655px] bg-[#FFF] rounded-lg flex-col justify-center relative">
-      <div className="Container w-[416px] h-[385px] flex-col justify-center absolute top-[10px] left-[32px]">
+      <div className="Container w-[416px] h-[385px] flex-col justify-center absolute top-[30px] left-[32px]">
         <FormHeader />
         <div className="flex flex-col gap-[8px] mt-[12px]">
           <label className="text-[#334155] text-sm font-semibold">
@@ -40,7 +40,7 @@ export const StepTwo = (props) => {
           <div className="w-[416px] h-[44px] rounded-lg border border-[#8B8E95] focus-within:border-[#0CA5E9] focus-within:outline-none flex items-center px-3">
             <Input
               className="w-full h-full bg-transparent outline-none text-black placeholder-gray-500"
-              placeholder="Placeholder"
+              placeholder="Email"
               onChange={handleChange}
               name={"email"}
               value={formValue.email}
@@ -56,7 +56,7 @@ export const StepTwo = (props) => {
           <div className="w-[416px] h-[44px] rounded-lg border border-[#8B8E95] focus-within:border-[#0CA5E9] focus-within:outline-none flex items-center px-3">
             <Input
               className="w-full h-full bg-transparent outline-none text-black placeholder-gray-500"
-              placeholder="Placeholder"
+              placeholder="Phone number"
               onChange={handleChange}
               name={"phoneNumber"}
               value={formValue.phoneNumber}
@@ -74,7 +74,7 @@ export const StepTwo = (props) => {
           <div className="w-[416px] h-[44px] rounded-lg border border-[#8B8E95] focus-within:border-[#0CA5E9] focus-within:outline-none flex items-center px-3">
             <Input
               className="w-full h-full bg-transparent outline-none text-black placeholder-gray-500"
-              placeholder="Placeholder"
+              placeholder="Password"
               onChange={handleChange}
               name={"password"}
               value={formValue.password}
@@ -91,7 +91,7 @@ export const StepTwo = (props) => {
           <div className="w-[416px] h-[44px] rounded-lg border border-[#8B8E95] focus-within:border-[#0CA5E9] focus-within:outline-none flex items-center px-3">
             <Input
               className="w-full h-full bg-transparent outline-none text-black placeholder-gray-500"
-              placeholder="Placeholder"
+              placeholder="Confirm password"
               onChange={handleChange}
               name={"confirmPassword"}
               value={formValue.confirmPassword}
