@@ -2,6 +2,8 @@ import React from "react";
 import { Input } from "./Input";
 import { Button } from "./Button";
 import { FormHeader } from "./formHeader";
+import { animationVariants } from "../utils/animation";
+import { motion, AnimatePresence } from "framer-motion";
 import { isStepOneValid } from "../utils/isStepOneValid ";
 
 export const StepOne = (props) => {
@@ -9,6 +11,7 @@ export const StepOne = (props) => {
     handleNextPage,
     setFormValue,
     handleError,
+    currentStep,
     clearError,
     className,
     formValue,
@@ -24,7 +27,6 @@ export const StepOne = (props) => {
     });
     clearError(name);
   };
-  
 
   const handleFormNextStep = () => {
     const { isValid, errors } = isStepOneValid(formValue);
@@ -40,7 +42,15 @@ export const StepOne = (props) => {
   };
 
   return (
-    <div className="w-[480px] h-[655px] bg-[#FFF] rounded-lg flex-col justify-center relative">
+    <motion.div
+      key={currentStep}
+      initial="enter"
+      animate="center"
+      exit="exit"
+      variants={animationVariants}
+      transition={{ duration: 0.5, ease: "easeInOut" }}
+      className="w-[480px] h-[655px] bg-[#FFF] rounded-lg flex-col justify-center relative"
+    >
       <div className="Container w-[416px] h-[385px] flex-col justify-center absolute top-[30px] left-[32px]">
         <FormHeader />
         <div className="flex flex-col gap-[8px] mt-[30px]">
@@ -100,6 +110,6 @@ export const StepOne = (props) => {
           handleNextPage={handleFormNextStep}
         />
       </div>
-    </div>
+    </motion.div>
   );
 };

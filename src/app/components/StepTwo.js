@@ -2,12 +2,15 @@ import React from "react";
 import { Input } from "./Input";
 import { Button } from "./Button";
 import { FormHeader } from "./formHeader";
+import { animationVariants } from "../utils/animation";
+import { motion, AnimatePresence } from "framer-motion";
 import { isStepTwoValid } from "../utils/isStepTwoValid";
 
 export const StepTwo = (props) => {
   const {
     handleNextPage,
     handleBackPage,
+    currentStep,
     setFormValue,
     handleError,
     clearError,
@@ -30,7 +33,15 @@ export const StepTwo = (props) => {
   };
 
   return (
-    <div className="w-[480px] h-[655px] bg-[#FFF] rounded-lg flex-col justify-center relative">
+    <motion.div
+      key={currentStep}
+      initial="enter"
+      animate="center"
+      exit="exit"
+      variants={animationVariants}
+      transition={{ duration: 0.5, ease: "easeInOut" }}
+      className="w-[480px] h-[655px] bg-[#FFF] rounded-lg flex-col justify-center relative"
+    >
       <div className="Container w-[416px] h-[385px] flex-col justify-center absolute top-[10px] left-[32px]">
         <FormHeader />
         <div className="flex flex-col gap-[8px] mt-[12px]">
@@ -115,6 +126,6 @@ export const StepTwo = (props) => {
           handleNextPage={handleFormNextStep}
         />
       </div>
-    </div>
+    </motion.div>
   );
 };

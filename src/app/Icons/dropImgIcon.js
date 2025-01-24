@@ -2,8 +2,8 @@ import * as React from "react"
 const DropImgIcon = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width={12}
-    height={12}
+    width={30}
+    height={30}
     fill="none"
     {...props}
   >
