@@ -63,14 +63,14 @@ export const MultiStep = () => {
     }
   };
 
-  useEffect(() => {
-    const data = localStorage.getItem("FormData");
-    if (data) {
-      const parsedData = JSON.parse(data);
-      setFormValue(parsedData);
-      setCurrentStep(parsedData.currentStep || 0);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const data = localStorage.getItem("FormData");
+  //   if (data) {
+  //     const parsedData = JSON.parse(data);
+  //     setFormValue(parsedData);
+  //     setCurrentStep(parsedData.currentStep || 0);
+  //   }
+  // }, []);
 
   return (
     <div className="flex items-center justify-center bg-[#F4F4F4] w-screen h-screen">
