@@ -92,7 +92,33 @@ export const StepThree = (props) => {
             <label className="text-[#334155] text-sm font-semibold">
               Profile Image <span className="text-red-500">*</span>
             </label>
-            <div className="w-[416px] h-[180px] rounded-lg border border-[#8B8E95] focus-within:border-[#0CA5E9] focus-within:outline-none flex flex-col items-center justify-center px-3">
+            <div className="w-[416px] h-[180px] rounded-lg border border-[#8B8E95] focus-within:border-[#0CA5E9] focus-within:outline-none flex flex-col items-center justify-center px-3 relative">
+              {!preview ? (
+                <label
+                  htmlFor="profileImg"
+                  className="cursor-pointer flex flex-col items-center"
+                >
+                  <DropImgIcon />
+                  <p className="text-gray-500 mt-2">Click to upload</p>
+                </label>
+              ) : (
+                <div className="relative w-full h-full">
+                  <img
+                    src={preview}
+                    alt="Profile Preview"
+                    className="w-full h-full object-cover rounded-lg"
+                  />
+                  <button
+                    onClick={() => {
+                      setPreview(null);
+                      setFormValue((prev) => ({ ...prev, profileImg: null }));
+                    }}
+                    className="absolute top-2 right-2 bg-gray-800 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-500"
+                  >
+                    ✕
+                  </button>
+                </div>
+              )}
               <input
                 type="file"
                 className="hidden"
@@ -100,19 +126,8 @@ export const StepThree = (props) => {
                 onChange={handleFileChange}
                 name="profileImg"
               />
-              <label htmlFor="profileImg" className="cursor-pointer">
-                <DropImgIcon />
-              </label>
-              {preview ? (
-                <img
-                  src={preview}
-                  alt="Profile Preview"
-                  className="mt-2 w-full h-full object-cover rounded-lg"
-                />
-              ) : (
-                <p className="text-gray-500 mt-2">Click to upload</p>
-              )}
             </div>
+
             {errors.profileImg && (
               <p className="text-red-500">{errors.profileImg}</p>
             )}
