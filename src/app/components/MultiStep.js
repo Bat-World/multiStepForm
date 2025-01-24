@@ -45,33 +45,53 @@ export const MultiStep = () => {
 
   const handleNextPage = () => {
     if (currentStep !== steps.length - 1) {
-      setCurrentStep((prevStep) => prevStep + 1);
+      const nextStep = currentStep + 1;
+      setCurrentStep(nextStep);
+      localStorage.setItem(
+        "FormData",
+        JSON.stringify({ ...formValue, currentStep: nextStep })
+      );
     }
   };
+  
   const handleBackPage = () => {
     if (currentStep !== 0) {
-      setCurrentStep((prevStep) => prevStep - 1);
+      const prevStep = currentStep - 1;
+      setCurrentStep(prevStep);
+      localStorage.setItem(
+        "FormData",
+        JSON.stringify({ ...formValue, currentStep: prevStep })
+      );
     }
   };
+  
 
-  // useEffect(() => {
-  //   const data = localStorage.getItem("FormData");
-  //   if (data) {
-  //     const parsedData = JSON.parse(data);
-  //     setFormValue(parsedData);
-  //     setCurrentStep(parsedData.currentStep || 0);
-  //   }
-  // }, []);
+  useEffect(() => {
+    const data = localStorage.getItem("FormData");
+    if (data) {
+      const parsedData = JSON.parse(data);
+      setFormValue(parsedData);
+      setCurrentStep(parsedData.currentStep || 0);
+    }
+  }, []);
+
+const animationVariants = { 
+  enter: {opacity: 0, x: 100},
+  center: {opacity: 1, x: 0},
+  exit: {opacity: 0, x: -100},
+};
 
   return (
     <div className="flex items-center justify-center bg-[#F4F4F4] w-screen h-screen">
       <AnimatePresence exitBeforeEnter>
+
         <motion.div
           key={currentStep}
-          initial={{ opacity: 0, x: 100 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -100 }}
-          transition={{ duration: 0.3 }}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          variants={animationVariants}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
           className="w-[480px] h-[655px] bg-[#FFF] rounded-lg flex flex-col items-center justify-center"
         >
           <Step

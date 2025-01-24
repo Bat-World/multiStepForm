@@ -1,7 +1,6 @@
 import React from "react";
 import { Input } from "./Input";
 import { Button } from "./Button";
-import { motion } from "framer-motion";
 import { FormHeader } from "./formHeader";
 import { isStepOneValid } from "../utils/isStepOneValid ";
 
@@ -18,9 +17,14 @@ export const StepOne = (props) => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setFormValue((prev) => ({ ...prev, [name]: value }));
+    setFormValue((prev) => {
+      const updatedForm = { ...prev, [name]: value };
+      localStorage.setItem("FormData", JSON.stringify(updatedForm));
+      return updatedForm;
+    });
     clearError(name);
   };
+  
 
   const handleFormNextStep = () => {
     const { isValid, errors } = isStepOneValid(formValue);
@@ -36,13 +40,7 @@ export const StepOne = (props) => {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, x: 100 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -100 }}
-      transition={{ duration: 0.5 }}
-      className="w-[480px] h-[655px] bg-[#FFF] rounded-lg flex-col justify-center relative"
-    >
+    <div className="w-[480px] h-[655px] bg-[#FFF] rounded-lg flex-col justify-center relative">
       <div className="Container w-[416px] h-[385px] flex-col justify-center absolute top-[30px] left-[32px]">
         <FormHeader />
         <div className="flex flex-col gap-[8px] mt-[30px]">
@@ -55,7 +53,7 @@ export const StepOne = (props) => {
               placeholder="First name"
               onChange={handleChange}
               name={"firstName"}
-              value={formValue.firstName}
+              value={formValue.firstName || ""}
             />
           </div>
           {errors.firstName && (
@@ -73,7 +71,7 @@ export const StepOne = (props) => {
               placeholder="Last name"
               onChange={handleChange}
               name={"lastName"}
-              value={formValue.lastName}
+              value={formValue.lastName || ""}
             />
           </div>
           {errors.lastName && <p className="text-red-500">{errors.lastName}</p>}
@@ -89,19 +87,19 @@ export const StepOne = (props) => {
               placeholder="Username"
               onChange={handleChange}
               name={"userName"}
-              value={formValue.userName}
+              value={formValue.userName || ""}
             />
           </div>
           {errors.userName && <p className="text-red-500">{errors.userName}</p>}
         </div>
       </div>
       <div className="absolute bottom-[32px] left-[32px]">
-          <Button
-            text={"Continue 1/3 >"}
-            className="w-[416px] h-[44px] bg-[#121316] rounded-[6px] text-lg font-medium text-[#FFF]"
-            handleNextPage={handleFormNextStep}
-          />
-        </div>
-    </motion.div>
+        <Button
+          text={"Continue 1/3 >"}
+          className="w-[416px] h-[44px] bg-[#121316] rounded-[6px] text-lg font-medium text-[#FFF]"
+          handleNextPage={handleFormNextStep}
+        />
+      </div>
+    </div>
   );
 };
