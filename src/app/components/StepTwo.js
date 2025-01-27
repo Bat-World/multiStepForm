@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+
 import { Input } from "./Input";
-import EyeIcon from "./EyeIcon";
 import { Button } from "./Button";
+import EyeIcon from "../Icons/EyeIcon";
+import React, { useState } from "react";
 import { FormHeader } from "./formHeader";
+import EyeIconOff from "../Icons/EyeIconOff";
 import { animationVariants } from "../utils/animation";
 import { motion, AnimatePresence } from "framer-motion";
 import { isStepTwoValid } from "../utils/isStepTwoValid";
@@ -19,6 +21,13 @@ export const StepTwo = (props) => {
     errors,
   } = props;
 
+  const [seePassword, setSeePassword] = useState("password");
+  // const [showPassword, setShowPassword] = useState(false);
+  
+  // const togglePasswordVisibility = () => {
+  //   setShowPassword((prev) => !prev);
+  // };
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormValue((prev) => ({ ...prev, [name]: value }));
@@ -32,8 +41,6 @@ export const StepTwo = (props) => {
     }
     handleError(errors);
   };
-
-  const [seePassword, setSeePassword] = useState("password");
 
   return (
     <motion.div
@@ -101,7 +108,7 @@ export const StepTwo = (props) => {
               className="absolute right-3 bg-transparent text-gray-500 hover:text-black"
               type="button"
             >
-             <EyeIcon/>
+             <EyeIconOff/>
             </button>
           </div>
           {errors.password && <p className="text-red-500">{errors.password}</p>}
@@ -114,21 +121,12 @@ export const StepTwo = (props) => {
           <div className="w-[416px] h-[44px] rounded-lg border border-[#8B8E95] focus-within:border-[#0CA5E9] focus-within:outline-none flex items-center px-3">
             <Input
               className="w-full h-full bg-transparent outline-none text-black placeholder-gray-500"
-              placeholder="Password"
+              placeholder="Confirm Password"
               onChange={handleChange}
-              name={"password"}
-              value={formValue.password}
-              type={seePassword}
+              name={"confirmPassword"}
+              value={formValue.confirmPassword}
+              type="password"
             />
-            <button
-              onMouseDown={() => setSeePassword("text")}
-              onMouseUp={() => setSeePassword("password")}
-              onMouseLeave={() => setSeePassword("password")}
-              className="absolute right-3 bg-transparent text-gray-500 hover:text-black"
-              type="button"
-            >
-                <EyeIcon/>
-            </button>
           </div>
           {errors.confirmPassword && (
             <p className="text-red-500">{errors.confirmPassword}</p>
