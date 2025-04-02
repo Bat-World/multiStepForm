@@ -13,9 +13,9 @@ export const StepTwo = (props) => {
   const {
     handleNextPage,
     handleBackPage,
-    currentStep,
     setFormValue,
     handleError,
+    currentStep,
     clearError,
     formValue,
     errors,

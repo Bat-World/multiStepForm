@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { FormHeader } from "./formHeader";
 import DropImgIcon from "../Icons/dropImgIcon";
 import { animationVariants } from "../utils/animation";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 export const StepThree = (props) => {
   const {
@@ -19,6 +19,7 @@ export const StepThree = (props) => {
   } = props;
 
   const [preview, setPreview] = useState(null);
+  const [isValid, setIsValid] = useState(true); // Add validation state
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -44,11 +45,21 @@ export const StepThree = (props) => {
     const birthDate = new Date(formValue.dateBirth);
     const age = today.getFullYear() - birthDate.getFullYear();
 
+    if (!formValue.dateBirth) {
+      errors.dateBirth = "Date of birth is required.";
+      handleError(errors);
+      setIsValid(false); // Set form as invalid
+      return;
+    }
+
     if (age < 18) {
       errors.dateBirth = "You must be at least 18 years old";
       handleError(errors);
+      setIsValid(false); // Set form as invalid
       return;
     }
+
+    setIsValid(true); // Form is valid, can proceed
 
     const localData = {
       ...formValue,
@@ -141,8 +152,9 @@ export const StepThree = (props) => {
           />
           <Button
             text={"Continue 3/3 >"}
-            className="w-[280px] h-[44px] bg-[#121316] rounded-[6px] text-lg font-medium text-[#FFF]"
+            className={`w-[280px] h-[44px] ${isValid ? "bg-[#121316]" : "bg-[#CBD5E1]"} rounded-[6px] text-lg font-medium text-[#FFF]`}
             handleNextPage={handleFormNextStep}
+            disabled={!isValid} // Disable the button if form is invalid
           />
         </div>
       </div>
